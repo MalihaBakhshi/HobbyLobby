@@ -15,8 +15,8 @@ public class Hobby {
 	private Long id;
 	private String name;
     private String about;
-	private Set<Long> users=new HashSet<>();
-	private Set<Long> posts=new HashSet<>();
+//	private Set<Long> users=new HashSet<>();
+//	private Set<Long> posts=new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,26 +44,20 @@ public class Hobby {
 		this.about = about;
 	}
 
-	public Set<Long> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<Long> users) {
-		this.users = users;
-	}
-
-	public Set<Long> getPosts() {
-		return posts;
-	}
-
-	public void setPosts(Set<Long> posts) {
-		this.posts = posts;
-	}
-
-	@Override
-	public String toString() {
-		return "Hobby [id=" + id + ", name=" + name + ", about=" + about + ", users=" + users + ", posts=" + posts
-				+ "]";
-	}
+//	public Set<Long> getUsers() {
+//		return users;
+//	}
+//
+//	public void setUsers(Set<Long> users) {
+//		this.users = users;
+//	}
+//
+//	public Set<Long> getPosts() {
+//		return posts;
+//	}
+//
+//	public void setPosts(Set<Long> posts) {
+//		this.posts = posts;
+//	}
 
 }

@@ -16,8 +16,8 @@ public class Post {
 	private long votes= 0L;
     private Long userId;
     private Date createdDate;
-	private Set<Long> usersVoted=new HashSet<>();
-    private List<Comment> comments = new ArrayList<>();
+//	private Set<Long> usersVoted=new HashSet<>();
+//    private List<Comment> comments = new ArrayList<>();
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,25 +51,18 @@ public class Post {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public Set<Long> getUsersVoted() {
-		return usersVoted;
-	}
-	public void setUsersVoted(Set<Long> usersVoted) {
-		this.usersVoted = usersVoted;
-	}
-	@OneToMany()
-    public List<Comment> getComments() {
-		return comments;
-	}
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
+//	public Set<Long> getUsersVoted() {
+//		return usersVoted;
+//	}
+//	public void setUsersVoted(Set<Long> usersVoted) {
+//		this.usersVoted = usersVoted;
+//	}
+//	@OneToMany()
+//    public List<Comment> getComments() {
+//		return comments;
+//	}
+//	public void setComments(List<Comment> comments) {
+//		this.comments = comments;
+//	}
 
-	@Override
-	public String toString() {
-		return "Post [id=" + id +", text=" + text
-				+ ", votes=" + votes + ", userId=" + userId + ", createdDate=" + createdDate 
-                + ", usersVoted=" + usersVoted + ", comments=" + comments + "]";
-	}
-	
 }
