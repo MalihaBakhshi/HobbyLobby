@@ -19,8 +19,8 @@ public class User {
 	private String name;
 	private String username;
 	private String password; 
-//	private Set<String> connections=new HashSet<>();
-//	private Set<Long> myHobbies=new HashSet<>();
+	private Set<String> connections=new HashSet<>();
+	private Set<Long> myHobbies=new HashSet<>();
 	private Set<Authority> authorities = new HashSet<>();
 	
 	@Id
@@ -49,18 +49,18 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-//	public Set<String> getConnections() {
-//		return connections;
-//	}
-//	public void setConnections(Set<String> connections) {
-//		this.connections = connections;
-//	}
-//	public Set<Long> getMyHobbies() {
-//		return myHobbies;
-//	}
-//	public void setMyHobbies(Set<Long> myHobbies) {
-//		this.myHobbies = myHobbies;
-//	}
+	public Set<String> getConnections() {
+		return connections;
+	}
+	public void setConnections(Set<String> connections) {
+		this.connections = connections;
+	}
+	public Set<Long> getMyHobbies() {
+		return myHobbies;
+	}
+	public void setMyHobbies(Set<Long> myHobbies) {
+		this.myHobbies = myHobbies;
+	}
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
 	public Set<Authority> getAuthorities() {
 		return authorities;

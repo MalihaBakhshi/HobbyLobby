@@ -42,10 +42,4 @@ public class Comment {
 		this.createdDate = createdDate;
 	}
 
-	@Override
-	public String toString() {
-		return "Comments [ id=" + id + "text=" + text + ", userId=" + userId + ", createdDate=" + createdDate 
-                    + "]";
-	}
-	
 }
