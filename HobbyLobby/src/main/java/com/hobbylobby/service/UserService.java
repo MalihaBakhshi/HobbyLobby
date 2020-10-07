@@ -110,6 +110,8 @@ public class UserService {
 
         user1.getConnections().add(user2);
         userRepository.save(user1);
+        
+        user1.setUser(user1);
 
         return;
     }
