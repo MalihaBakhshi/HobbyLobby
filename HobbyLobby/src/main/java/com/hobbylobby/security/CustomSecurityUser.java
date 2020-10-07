@@ -9,7 +9,7 @@ import com.hobbylobby.domain.*;
 public class CustomSecurityUser extends User implements UserDetails{
 
 	private static final long serialVersionUID = 2014506157925882093L;
-
+	
 	public CustomSecurityUser() {	}
 
 	public CustomSecurityUser(User user) {

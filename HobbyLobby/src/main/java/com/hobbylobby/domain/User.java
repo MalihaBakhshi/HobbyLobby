@@ -1,5 +1,5 @@
 package com.hobbylobby.domain;
-
+ 
 import java.util.*;
 
 import javax.persistence.CascadeType;
@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,9 +21,12 @@ public class User {
 	private String name;
 	private String username;
 	private String password; 
-	private Set<String> connections=new HashSet<>();
-	private Set<Long> myHobbies=new HashSet<>();
+	private Set<User> connections=new HashSet<>();
+	private User user;
+	private Set<Hobby> myHobbies=new HashSet<>();
 	private Set<Authority> authorities = new HashSet<>();
+	private String bio;
+	private Set<Post> votedOn = new HashSet<>();
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,17 +53,26 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public Set<String> getConnections() {
+	}	
+	@OneToMany(mappedBy = "user")
+	public Set<User> getConnections() {
 		return connections;
 	}
-	public void setConnections(Set<String> connections) {
+	public void setConnections(Set<User> connections) {
 		this.connections = connections;
 	}
-	public Set<Long> getMyHobbies() {
+	@ManyToOne
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	@ManyToMany
+	public Set<Hobby> getMyHobbies() {
 		return myHobbies;
 	}
-	public void setMyHobbies(Set<Long> myHobbies) {
+	public void setMyHobbies(Set<Hobby> myHobbies) {
 		this.myHobbies = myHobbies;
 	}
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
@@ -67,6 +81,19 @@ public class User {
 	}
 	public void setAuthorities(Set<Authority> authorities) {
 		this.authorities = authorities;
+	}
+	public String getBio() {
+		return bio;
+	}
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
+	@ManyToMany
+	public Set<Post> getVotedOn() {
+		return votedOn;
+	}
+	public void setVotedOn(Set<Post> votedOn) {
+		this.votedOn = votedOn;
 	}
 	
 }

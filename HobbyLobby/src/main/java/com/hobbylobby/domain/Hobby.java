@@ -2,10 +2,14 @@ package com.hobbylobby.domain;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,8 +19,8 @@ public class Hobby {
 	private Long id;
 	private String name;
     private String about;
-	private Set<Long> users=new HashSet<>();
-	private Set<Long> posts=new HashSet<>();
+	private Set<User> users=new HashSet<>();
+	private Set<Post> posts=new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,19 +48,21 @@ public class Hobby {
 		this.about = about;
 	}
 
-	public Set<Long> getUsers() {
+	@ManyToMany
+	public Set<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(Set<Long> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 
-	public Set<Long> getPosts() {
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "hobby")
+	public Set<Post> getPosts() {
 		return posts;
 	}
 
-	public void setPosts(Set<Long> posts) {
+	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
 	}
 
