@@ -26,7 +26,6 @@ public class LoginController {
 
             return "redirect:/dashboard";
         }
-        model.put("user", new User());
 
         return "login";
     }

@@ -34,15 +34,15 @@ public class HobbiesController {
     
     @GetMapping("/hobbies")
     public String hobbies(@AuthenticationPrincipal User user, ModelMap model) {   
-
+    	
         List<Hobby> hobbies = hobbyService.findAllHobbies();
         List<Hobby> hobbyList = hobbyService.sortHobbiesByName(hobbies);
-
+ 
         if(user == null) {
 
             model.put("hobbies", hobbyList);
-        } else {
-
+        } else if(user.getId() != null){
+        	
             Optional<User> user1 = userService.findUserById(user.getId());
             Set<Hobby> hobbiesId = (user1.get()).getMyHobbies();
             List<Hobby> otherHobbies  = new ArrayList<>();
@@ -70,10 +70,11 @@ public class HobbiesController {
 
     @PostMapping("/hobbies/{hobbyId}/register")
     public String register(@PathVariable Long hobbyId, @AuthenticationPrincipal User user) {   
-        
+      
         Optional<Hobby> hobby = hobbyService.findHobbyById(hobbyId);
         Optional<User> user1 = userService.findUserById(user.getId());
-
+        System.out.println(user1.get());
+        System.out.println(hobby.get());
         userService.addHobby(user1.get(), hobby);
         
         return "redirect:/hobbies/"+hobbyId;
@@ -97,7 +98,7 @@ public class HobbiesController {
 
     @GetMapping("/hobbies/{hobbyId}")
     public String posts(@PathVariable Long hobbyId, ModelMap model, @AuthenticationPrincipal User loggedUser) {   
-        
+
         boolean isRegistered = false;
         Optional<Hobby> hobbyOpt = hobbyService.findHobbyById(hobbyId);
 

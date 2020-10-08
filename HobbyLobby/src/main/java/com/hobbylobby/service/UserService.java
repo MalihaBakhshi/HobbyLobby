@@ -26,8 +26,14 @@ public class UserService {
 	private PasswordEncoder passwordEncoder;
 
     public Optional<User> findUserById(Long id) {
-
-        return userRepository.findById(id);
+    	
+    	if(id != null) {
+    		
+    		return userRepository.findById(id);
+    	} else {
+    		return null;
+    	}
+    	 	
     }
 
     public List<User> findUserByUsername(String username) {
@@ -66,6 +72,7 @@ public class UserService {
 
 		Authority authority = new Authority();
 		authority.setAuthority("ROLE_USER");
+		authority.setUser(user);
 		user.getAuthorities().add(authority);
 
 		List<User> users = userRepository.findByUsername(user.getUsername());

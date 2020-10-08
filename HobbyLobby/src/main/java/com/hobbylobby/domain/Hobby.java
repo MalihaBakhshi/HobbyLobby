@@ -65,5 +65,4 @@ public class Hobby {
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
 	}
-
 }
