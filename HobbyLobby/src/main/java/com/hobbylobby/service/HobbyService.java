@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hobbylobby.domain.Hobby;
+import com.hobbylobby.domain.User;
 import com.hobbylobby.repository.HobbyRepository;
 
 @Service
@@ -35,7 +36,7 @@ public class HobbyService {
 
         return hobbies;
     }
-
+    
     public Hobby save(Hobby hobby) {
 
         return hobbyRepository.save(hobby);

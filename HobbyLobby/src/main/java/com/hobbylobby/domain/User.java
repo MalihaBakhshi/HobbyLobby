@@ -8,21 +8,27 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "users")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class User {
 
 	private Long id;
 	private String name;
 	private String username;
 	private String password; 
-	private Set<User> connections=new HashSet<>();
-	private User user;
+	private Set<User> connections;
 	private Set<Hobby> myHobbies=new HashSet<>();
 	private Set<Authority> authorities = new HashSet<>();
 	private String bio;
@@ -53,22 +59,24 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}	
-	@OneToMany(mappedBy = "user")
+	}
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "relation",
+	            joinColumns = @JoinColumn(name = "user_id"),
+	            inverseJoinColumns = @JoinColumn(name = "following_id"))
+	@JsonIgnore
 	public Set<User> getConnections() {
 		return connections;
 	}
 	public void setConnections(Set<User> connections) {
 		this.connections = connections;
 	}
-	@ManyToOne
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "user_hobby",
+			   joinColumns = {@JoinColumn(name = "user_id")},
+			   inverseJoinColumns = {@JoinColumn(name = "hobby_id")})
+	@JsonIgnore
 	public Set<Hobby> getMyHobbies() {
 		return myHobbies;
 	}
@@ -88,7 +96,11 @@ public class User {
 	public void setBio(String bio) {
 		this.bio = bio;
 	}
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "user_post",
+			   joinColumns = {@JoinColumn(name = "user_id")},
+			   inverseJoinColumns = {@JoinColumn(name = "post_id")})
+	@JsonIgnore
 	public Set<Post> getVotedOn() {
 		return votedOn;
 	}
@@ -98,7 +110,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password
-				+ ", connections=" + connections + ", user=" + user + ", myHobbies=" + myHobbies + ", authorities="
+				+ ", connections=" + connections + ", myHobbies=" + myHobbies + ", authorities="
 				+ authorities + ", bio=" + bio + ", votedOn=" + votedOn + "]";
 	}
 	

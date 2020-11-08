@@ -73,8 +73,7 @@ public class HobbiesController {
       
         Optional<Hobby> hobby = hobbyService.findHobbyById(hobbyId);
         Optional<User> user1 = userService.findUserById(user.getId());
-        System.out.println(user1.get());
-        System.out.println(hobby.get());
+        
         userService.addHobby(user1.get(), hobby);
         
         return "redirect:/hobbies/"+hobbyId;
@@ -107,32 +106,24 @@ public class HobbiesController {
             Hobby hobby = hobbyOpt.get();
 
             Set<Post> postsId = hobby.getPosts();
-            Set<User> usersId = hobby.getUsers();
+            Set<User> users = hobby.getUsers();
 
             List<Post> posts = new ArrayList<>(postsId);
-            List<User> users = new ArrayList<>(usersId);
 
             posts = postService.sortPostsByDate(posts);
 
-            for (Iterator<User> it = usersId.iterator(); it.hasNext(); ) {
+            for (Iterator<User> it = users.iterator(); it.hasNext(); ) {
                 
-                User id = it.next();
-                             
-                if(loggedUser!=null && id.equals(loggedUser)) {
+                Long id = it.next().getId();
+            
+                if(loggedUser!= null && id.equals(loggedUser.getId())) {
 
                     isRegistered=true;
-                }
-
-                Optional<User> user = userService.findUserById(id.getId());
-
-                if(user.isPresent()) {
-
-                    users.add(user.get());
                 }
             }
 
             users = userService.sortUsersByName(users);
-
+            		
             Optional<User> user1 = userService.findUserById(loggedUser.getId());
 
             model.put("user", user1.get());
@@ -141,7 +132,7 @@ public class HobbiesController {
 
                 model.put("isRegistered", isRegistered);
             }
-
+            
             model.put("users", users);
             model.put("posts", posts);
             model.put("hobby", hobby);

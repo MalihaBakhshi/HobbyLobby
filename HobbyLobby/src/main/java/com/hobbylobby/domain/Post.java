@@ -12,7 +12,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Post {
 
     private Long id;
@@ -58,20 +63,22 @@ public class Post {
 	}
 	
 	@ManyToOne
+	@JsonIgnore
 	public Hobby getHobby() {
 		return hobby;
 	}
 	public void setHobby(Hobby hobby) {
 		this.hobby = hobby;
 	}
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "votedOn")
+	@JsonIgnore
 	public Set<User> getUsersVoted() {
 		return usersVoted;
 	}
 	public void setUsersVoted(Set<User> usersVoted) {
 		this.usersVoted = usersVoted;
 	}
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "post")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "post")
 	public Set<Comment> getComments() {
 		return comments;
 	}

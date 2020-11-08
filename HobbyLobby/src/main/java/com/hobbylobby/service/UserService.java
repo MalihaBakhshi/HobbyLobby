@@ -41,16 +41,18 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public List<User> sortUsersByName(List<User> users) {
-
-        Collections.sort(users, new Comparator<User>(){
+    public Set<User> sortUsersByName(Set<User> users) {
+    	
+    	Set<User> sorted = new TreeSet<User>(new Comparator<User>() {
             @Override
             public int compare(User user1, User user2) {
                 return user1.getName().compareTo(user2.getName());
             }
         });
 
-        return users;
+        sorted.addAll(users);
+        
+        return sorted;
     }
 
     public List<String> sortUsersByName2(List<String> users) {
@@ -93,10 +95,8 @@ public class UserService {
             Hobby hobby=hobbyOpt.get();
 
             user.getMyHobbies().add(hobby);
-            hobby.getUsers().add(user);
-
             userRepository.save(user);
-            hobbyService.save(hobby);
+            
         }
 
         return;
@@ -105,11 +105,9 @@ public class UserService {
     public void removeHobby(User user, Hobby hobby) {
 
         user.getMyHobbies().remove(hobby);
-        hobby.getUsers().remove(user);
 
         userRepository.save(user);
-        hobbyService.save(hobby);
-
+        
         return;
     }
 
@@ -117,8 +115,6 @@ public class UserService {
 
         user1.getConnections().add(user2);
         userRepository.save(user1);
-        
-        user1.setUser(user1);
 
         return;
     }

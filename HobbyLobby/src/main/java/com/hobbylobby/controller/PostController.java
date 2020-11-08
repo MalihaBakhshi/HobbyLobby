@@ -90,7 +90,7 @@ public class PostController {
             model.put("hobby", hobby);
             model.put("rootComment", new Comment());
 
-            Set<User> usersId = post.getUsersVoted();
+            Set<User> usersVoted = post.getUsersVoted();
             Long authorId = post.getUserId();
             Optional<User> authorOpt = userService.findUserById(authorId);
 
@@ -98,8 +98,6 @@ public class PostController {
 
                 model.put("author", authorOpt.get());
             }
-
-            List<User> usersVoted = new ArrayList<>(usersId);
             
             Set<Comment> comments = post.getComments();
             List<Comment> comment  = new ArrayList<>(comments);
