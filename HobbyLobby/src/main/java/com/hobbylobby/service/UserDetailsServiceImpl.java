@@ -1,7 +1,5 @@
 package com.hobbylobby.service;
 
-import java.util.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,12 +18,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		List<User> user=userRepo.findByUsername(username);
 
-		if(user.size()==0)
+		User user=userRepo.findByUsername(username);
+
+		if(user == null)
 				throw new UsernameNotFoundException("Invalid Username and Password");
-		return new CustomSecurityUser(user.get(0));
+		
+		return new CustomSecurityUser(user);
 	}
 
 }

@@ -54,7 +54,6 @@ public class Hobby {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "myHobbies")
-	@JsonIgnore
 	public Set<User> getUsers() {
 		return users;
 	}

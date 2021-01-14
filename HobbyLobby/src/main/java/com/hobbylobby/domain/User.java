@@ -107,11 +107,5 @@ public class User {
 	public void setVotedOn(Set<Post> votedOn) {
 		this.votedOn = votedOn;
 	}
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password
-				+ ", connections=" + connections + ", myHobbies=" + myHobbies + ", authorities="
-				+ authorities + ", bio=" + bio + ", votedOn=" + votedOn + "]";
-	}
 	
 }

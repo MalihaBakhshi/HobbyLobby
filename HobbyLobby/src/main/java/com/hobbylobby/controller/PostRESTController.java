@@ -32,6 +32,7 @@ public class PostRESTController {
     public boolean islikedPost (@AuthenticationPrincipal User user, @PathVariable Long postId, @PathVariable Long hobbyId) {
 
         Optional<Post> postOpt = postService.findPostById(postId);
+        Long userId = user.getId();
         boolean hasLiked = false;
 
         if(postOpt.isPresent()) {
@@ -41,14 +42,14 @@ public class PostRESTController {
 
             for (Iterator<User> it = usersId.iterator(); it.hasNext(); ) {
 
-                User id = it.next();
+                Long id = (it.next()).getId();
 
-                if(id.equals(user)) {
-
+                if(id.equals(userId)) {
                     hasLiked = true;
                 }
             }
         }
+        
         return hasLiked;
     }
 }

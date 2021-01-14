@@ -1,8 +1,14 @@
 package com.hobbylobby.service;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.acls.model.AlreadyExistsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,16 +17,11 @@ import com.hobbylobby.domain.Hobby;
 import com.hobbylobby.domain.User;
 import com.hobbylobby.repository.UserRepository;
 
-import org.springframework.security.acls.model.*;
-
 @Service
 public class UserService {
 
 	@Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private HobbyService hobbyService;
 
     @Autowired
 	private PasswordEncoder passwordEncoder;
@@ -36,7 +37,7 @@ public class UserService {
     	 	
     }
 
-    public List<User> findUserByUsername(String username) {
+    public User findUserByUsername(String username) {
 
         return userRepository.findByUsername(username);
     }
@@ -77,9 +78,9 @@ public class UserService {
 		authority.setUser(user);
 		user.getAuthorities().add(authority);
 
-		List<User> users = userRepository.findByUsername(user.getUsername());
+		User users = userRepository.findByUsername(user.getUsername());
 
-        if(users.size()==0) {
+        if(users == null) {
 
 		    return userRepository.save(user);
         } else {

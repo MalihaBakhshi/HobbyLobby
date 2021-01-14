@@ -22,14 +22,12 @@ public class HomeRESTController {
     @GetMapping("/isunique/{username}")
     public boolean isUniqueUsername (@PathVariable String username) {
 
-        List<User> userOpt = userService.findUserByUsername(username);
+        User userOpt = userService.findUserByUsername(username);
 
 
-        if(userOpt.size()==1) {
-            // System.out.println("falseeeee");
+        if(userOpt != null) {
             return false;
         } else {
-            // System.out.println("trueeeeeee");
             return true;
         }
     }
@@ -40,10 +38,8 @@ public class HomeRESTController {
         Optional<User> userOpt = userService.findUserById(userId);
 
         if(userOpt.isPresent()) {
-            System.out.println(userOpt.get().getUsername());
             return userOpt.get().getUsername();
         } else {
-            System.out.println("falseeeeeee");
             return "Name";
         }
     }

@@ -29,9 +29,7 @@ public class HomeController {
     
     @GetMapping("/")
     public String rootView (@AuthenticationPrincipal User user, ModelMap model) {
-    	
-    	System.out.println("Home");
-    	System.out.println(user);
+
         List<Hobby> hobbies = hobbyService.findAllHobbies();
 
         if(user == null) {
@@ -102,7 +100,6 @@ public class HomeController {
         Optional<Hobby> factHobby = hobbyService.findHobbyById(factHobbyId);
        
         model.put("fact", facts[day-1][0]);
-        System.out.println(factHobbyId);
         model.put("facthobby", factHobby.get());
 
         return "index";
